@@ -13,48 +13,48 @@ declare module ramda {
   declare type BinaryPredicateFn2<T,S> = (x:T, y:S) => boolean
 
   declare type CurriedFunction2<T1, T2, R> =
-    & ((t1: T1, t2: T2) => R)
-    & ((t1: T1, ...rest: Array<void>) => (t2: T2) => R)
+    & ((T1, T2) => R)
+    & ((T1, ...rest: Array<void>) => (T2) => R)
 
   declare type CurriedFunction3<T1, T2, T3, R> =
-    & ((t1: T1, t2: T2, t3: T3) => R)
-    & ((t1: T1, t2: T2, ...rest: Array<void>) => (t3: T3) => R)
-    & ((t1: T1, ...rest: Array<void>) => CurriedFunction2<T2, T3, R>)
+    & ((T1, T2, T3) => R)
+    & ((T1, T2, ...rest: Array<void>) => (T3) => R)
+    & ((T1, ...rest: Array<void>) => CurriedFunction2<T2, T3, R>)
 
   declare type CurriedFunction4<T1, T2, T3, T4, R> =
-    & ((t1: T1, t2: T2, t3: T3, t4: T4) => R)
-    & ((t1: T1, t2: T2, t3: T3, ...rest: Array<void>) => (t4: T4) => R)
-    & ((t1: T1, t2: T2, ...rest: Array<void>) => CurriedFunction2<T3, T4, R>)
-    & ((t1: T1, ...rest: Array<void>) => CurriedFunction3<T2, T3, T4, R>)
+    & ((T1, T2, T3, T4) => R)
+    & ((T1, T2, T3, ...rest: Array<void>) => (T4) => R)
+    & ((T1, T2, ...rest: Array<void>) => CurriedFunction2<T3, T4, R>)
+    & ((T1, ...rest: Array<void>) => CurriedFunction3<T2, T3, T4, R>)
 
   declare type CurriedFunction5<T1, T2, T3, T4, T5, R> =
-    & ((t1: T1) => CurriedFunction4<T2, T3, T4, T5, R>)
-    & ((t1: T1, t2: T2) => CurriedFunction3<T3, T4, T5, R>)
-    & ((t1: T1, t2: T2, t3: T3) => CurriedFunction2<T4, T5, R>)
-    & ((t1: T1, t2: T2, t3: T3, t4: T4) => (t5: T5) => R)
-    & ((t1: T1, t2: T2, t3: T3, t4: T4, t5: T5) => R)
+    & ((T1) => CurriedFunction4<T2, T3, T4, T5, R>)
+    & ((T1, T2) => CurriedFunction3<T3, T4, T5, R>)
+    & ((T1, T2, T3) => CurriedFunction2<T4, T5, R>)
+    & ((T1, T2, T3, T4) => (T5) => R)
+    & ((T1, T2, T3, T4, T5) => R)
 
   declare type CurriedFunction6<T1, T2, T3, T4, T5, T6, R> =
-    & ((t1: T1) => CurriedFunction5<T2, T3, T4, T5, T6, R>)
-    & ((t1: T1, t2: T2) => CurriedFunction4<T3, T4, T5, T6, R>)
-    & ((t1: T1, t2: T2, t3: T3) => CurriedFunction3<T4, T5, T6, R>)
-    & ((t1: T1, t2: T2, t3: T3, t4: T4) => CurriedFunction2<T5, T6, R>)
-    & ((t1: T1, t2: T2, t3: T3, t4: T4, t5: T5) => (t6: T6) => R)
-    & ((t1: T1, t2: T2, t3: T3, t4: T4, t5: T5, t6: T6) => R)
+    & ((T1) => CurriedFunction5<T2, T3, T4, T5, T6, R>)
+    & ((T1, T2) => CurriedFunction4<T3, T4, T5, T6, R>)
+    & ((T1, T2, T3) => CurriedFunction3<T4, T5, T6, R>)
+    & ((T1, T2, T3, T4) => CurriedFunction2<T5, T6, R>)
+    & ((T1, T2, T3, T4, T5) => (T6) => R)
+    & ((T1, T2, T3, T4, T5, T6) => R)
 
-  declare type Pipe = (<A,B,C,D,E,F,G>(ab: UnaryFn<A,B>, bc: UnaryFn<B,C>, cd: UnaryFn<C,D>, de: UnaryFn<D,E>, ef: UnaryFn<E,F>, fg: UnaryFn<F,G>, ...rest: Array<void>) => UnaryFn<A,G>)
-    & (<A,B,C,D,E,F>(ab: UnaryFn<A,B>, bc: UnaryFn<B,C>, cd: UnaryFn<C,D>, de: UnaryFn<D,E>, ef: UnaryFn<E,F>, ...rest: Array<void>) => UnaryFn<A,F>)
-    & (<A,B,C,D,E>(ab: UnaryFn<A,B>, bc: UnaryFn<B,C>, cd: UnaryFn<C,D>, de: UnaryFn<D,E>, ...rest: Array<void>) => UnaryFn<A,E>)
-    & (<A,B,C,D>(ab: UnaryFn<A,B>, bc: UnaryFn<B,C>, cd: UnaryFn<C,D>, ...rest: Array<void>) => UnaryFn<A,D>)
-    & (<A,B,C>(ab: UnaryFn<A,B>, bc: UnaryFn<B,C>, ...rest: Array<void>) => UnaryFn<A,C>)
-    & (<A,B>(ab: UnaryFn<A,B>, ...rest: Array<void>) => UnaryFn<A,B>)
+  // pipe upto 5 params
+  declare function pipe <A, B> (A => B, ...rest: Array<void>): A => B
+  declare function pipe <A, B, C> (A => B, B => C, ...rest: Array<void>): A => C
+  declare function pipe <A, B, C, D> (A => B, B => C, C => D, ...rest: Array<void>): A => D
+  declare function pipe <A, B, C, D, E> (A => B, B => C, C => D, D => E, ...rest: Array<void>): A => E
+  declare function pipe <A, B, C, D, E, F> (A => B, B => C, C => D, D => E, E => F, ...rest: Array<void>): A => F
 
-  declare type Compose = & (<A,B,C,D,E,F,G>(fg: UnaryFn<F,G>, ef: UnaryFn<E,F>, de: UnaryFn<D,E>, cd: UnaryFn<C,D>, bc: UnaryFn<B,C>, ab: UnaryFn<A,B>, ...rest: Array<void>) => UnaryFn<A,G>)
-    & (<A,B,C,D,E,F>(ef: UnaryFn<E,F>, de: UnaryFn<D,E>, cd: UnaryFn<C,D>, bc: UnaryFn<B,C>, ab: UnaryFn<A,B>, ...rest: Array<void>) => UnaryFn<A,F>)
-    & (<A,B,C,D,E>(de: UnaryFn<D,E>, cd: UnaryFn<C,D>, bc: UnaryFn<B,C>, ab: UnaryFn<A,B>, ...rest: Array<void>) => UnaryFn<A,E>)
-    & (<A,B,C,D>(cd: UnaryFn<C,D>, bc: UnaryFn<B,C>, ab: UnaryFn<A,B>, ...rest: Array<void>) => UnaryFn<A,D>)
-    & (<A,B,C>(bc: UnaryFn<B,C>, ab: UnaryFn<A,B>, ...rest: Array<void>) => UnaryFn<A,C>)
-    & (<A,B>(ab: UnaryFn<A,B>, ...rest: Array<void>) => UnaryFn<A,B>)
+  // compose upto 5 params
+  declare function compose <A, B> (A => B, ...rest: Array<void>): A => B
+  declare function compose <A, B, C> (B => C, A => B, ...rest: Array<void>): A => C
+  declare function compose <A, B, C, D> (C => D, B => C, A => B, ...rest: Array<void>): A => D
+  declare function compose <A, B, C, D, E> (D => E, C => D, B => C, A => B, ...rest: Array<void>): A => E
+  declare function compose <A, B, C, D, E, F> (E => F, D => E, C => D, B => C, A => B, ...rest: Array<void>): A => F
 
   declare type Curry = & (<T1, T2, TResult>(fn: (a: T1, b: T2) => TResult) => CurriedFunction2<T1,T2, TResult>)
     & (<T1, T2, T3, TResult>(fn: (a: T1, b: T2, c: T3) => TResult) => CurriedFunction3<T1,T2, T3, TResult>)
@@ -101,7 +101,7 @@ declare module ramda {
   */
 
   declare var compose: Compose;
-  declare var pipe: Pipe;
+  // declare var pipe: Pipe;
   declare var curry: Curry;
   declare function curryN(length: number, fn: (...args: Array<any>) => any): Function
 
