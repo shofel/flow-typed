@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "test": "flow-typed run-tests-ramda"
+  }
+  "dependencies": {
+    "flow-typed": "^2.0.0"
+  }
+}
